@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.commons.io.FilenameUtils;
 
 import com.rozhak.selfeducation.photofilter.filters.Filter;
-import com.rozhak.selfeducation.photofilter.filters.impl.Sepia;
+import com.rozhak.selfeducation.photofilter.filters.FilterFactory;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -39,7 +39,8 @@ public class UploadFileService {
 			extension = FilenameUtils.getExtension(fileName);
 			BufferedImage inputImage = ImageIO.read(uploadedInputStream);
 			
-			Filter filter = new Sepia();
+			
+			Filter filter = new FilterFactory().getFilter("Sepia");
 			outputImage = filter.processImage(inputImage);
 			
 			baos = new ByteArrayOutputStream();

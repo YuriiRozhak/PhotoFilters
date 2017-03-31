@@ -1,6 +1,7 @@
 package com.rozhak.selfeducation.photofilter.filters.impl;
 
 import java.awt.image.BufferedImage;
+import java.util.function.Predicate;
 
 import com.rozhak.selfeducation.photofilter.filters.Filter;
 
@@ -12,7 +13,7 @@ public class Sepia implements Filter {
 		// get width and height of the image
 		int width = inputImage.getWidth();
 		int height = inputImage.getHeight();
-
+		Predicate<Integer> biggetThanAllowedColour = p -> p > 255;
 		// convert to sepia
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
@@ -29,19 +30,19 @@ public class Sepia implements Filter {
 				int tb = (int) (0.272 * r + 0.534 * g + 0.131 * b);
 
 				// check condition
-				if (tr > 255) {
+				if (biggetThanAllowedColour.test(tr)) {
 					r = 255;
 				} else {
 					r = tr;
 				}
 
-				if (tg > 255) {
+				if (biggetThanAllowedColour.test(tg)) {
 					g = 255;
 				} else {
 					g = tg;
 				}
 
-				if (tb > 255) {
+				if (biggetThanAllowedColour.test(tb)) {
 					b = 255;
 				} else {
 					b = tb;
@@ -55,5 +56,9 @@ public class Sepia implements Filter {
 		}
 
 		return inputImage;
+	}
+
+	public static Predicate<Integer> isBigger(Integer than) {
+		return i -> i > than;
 	}
 }

@@ -4,6 +4,5 @@ package com.rozhak.selfeducation.photofilter.filters;
 public interface FilterGetter<T extends Filter> {
 
 	public T getFilter();
-	
-	
+
 }

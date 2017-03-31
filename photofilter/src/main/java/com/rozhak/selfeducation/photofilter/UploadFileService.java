@@ -27,11 +27,10 @@ public class UploadFileService {
 	@POST
 	@Path("/filter")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Produces({"image/jpeg,image/png"})
+	@Produces({ "image/jpeg,image/png" })
 	public Response uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@FormDataParam("filterName") String filterName
-			) {
+			@FormDataParam("filterName") String filterName) {
 
 		ByteArrayOutputStream baos = null;
 		BufferedImage outputImage = null;
@@ -41,11 +40,11 @@ public class UploadFileService {
 			fileName = fileDetail.getFileName();
 			extension = FilenameUtils.getExtension(fileName);
 			BufferedImage inputImage = ImageIO.read(uploadedInputStream);
-			
+
 			Filters filterEnum = Filters.valueOf(filterName.toUpperCase());
 			Filter filter = new FilterFactory().getFilter(filterEnum);
 			outputImage = filter.processImage(inputImage);
-			
+
 			baos = new ByteArrayOutputStream();
 			ImageIO.write(outputImage, extension, baos);
 		} catch (Exception e) {
@@ -59,7 +58,5 @@ public class UploadFileService {
 		return res;
 
 	}
-
-	
 
 }

@@ -1,15 +1,22 @@
 package com.rozhak.selfeducation.photofilter.filters;
 
+import com.rozhak.selfeducation.photofilter.filters.impl.BlackWhiteFilter;
 import com.rozhak.selfeducation.photofilter.filters.impl.Sepia;
 
 public class FilterFactory {
 
 	public Filter getFilter(Filters filtername) throws ClassNotFoundException {
 		Filter filter = null;
-		if (filtername == Filters.SEPIA) {
+		switch (filtername) {
+		case SEPIA:
 			FilterGetter<Sepia> sepia = Sepia::new;
 			filter = sepia.getFilter();
-		} else {
+			break;
+		case BLACK_WHITE:
+			FilterGetter<BlackWhiteFilter> blackWhiteFilter = BlackWhiteFilter::new;
+			filter = blackWhiteFilter.getFilter();
+			break;
+		default:
 			return null;
 		}
 		return filter;
